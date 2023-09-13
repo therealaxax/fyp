@@ -1,6 +1,20 @@
 from langchain.llms import OpenAI
 from langchain.schema import HumanMessage
 from langchain import OpenAI, SQLDatabase
+import postgistest as pgt
+
+pgt.query()
+
+# llm = OpenAI(openai_api_key = "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", temperature=0.9)
+# text = "What would be a good company name for a company that makes colorful socks?"
+# response = llm(text)
+# print(response)
+
+# exit = input("Press any key to continue")
+
+#///////////////////////////////////////////////////////////////////////////////
+#BELOW IS TESTING ZONE
+
 # from langchain.chat_models import ChatOpenAI
 
 # llm = OpenAI(openai_api_key = "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")
@@ -13,17 +27,12 @@ from langchain import OpenAI, SQLDatabase
 # llm.predict(text)
 # from langchain.llms import OpenAI
 #################################################################
-llm = OpenAI(openai_api_key = "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", temperature=0.9)
-text = "What would be a good company name for a company that makes colorful socks?"
-response = llm(text)
-print(response)
+
 #################################################################
 # messages = [HumanMessage(content=text)]
 # llm.predict_messages(messages)
 # print(llm(text))
 # llm.predict(text)
-
-exit = input("Press any key to continue")
 
 ###############################################
 
