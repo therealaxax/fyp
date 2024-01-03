@@ -1,3 +1,4 @@
+# RUN WITH COMMAND python postgistest.py
 # import sys
 # print(sys.path)
 
@@ -27,7 +28,12 @@ db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
 # db_chain.run("What neighborhood is the 'Broad St' station in?")
 # db_chain.run("Using spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
 # db_chain.run("Using ST_Contains and spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
-db_chain.run("By specifying which table the column names are from, and by using ST_Contains and spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
+# db_chain.run("By specifying which table the column names are from, and by using ST_Contains and spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
+db_chain.run("Using the nyc_neighborhoods and nyc_subway_stations tables and by specifying which table the column names are from, and by using ST_Contains and spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
+# db_chain.run("What is the average length of residential streets in nyc?")
+# db_chain.run("By using the ST_Length function, what is the average length of residential streets in nyc?")
+# db_chain.run("By using the ST_Length function, what is the average length of residential streets in nyc? State the result in feet.")
+# db_chain.run("By using the ST_Length function, what is the average length of residential streets in nyc? Note that the database returns results in feet.")
 
 def testquery():
     sql = "SELECT * FROM nyc_neighborhoods"

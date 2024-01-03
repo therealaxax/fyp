@@ -15,6 +15,27 @@ out body;
 out skel qt;
 """
 
+# query = """
+# [out:json][timeout:25];
+# // gather results
+# (
+
+#   // query for ways
+#   way["amenity"="school"](1.130475,103.692035,1.450475,104.012035);
+
+# );
+# // print results
+# out body;
+# >;
+# out skel qt;
+# """
+
+# query = """
+# [out:json][timeout:25];
+# node(364450767);
+# out body;
+# """
+
 # Overpass API URL
 url = "http://overpass-api.de/api/interpreter"
 
@@ -24,13 +45,13 @@ data = response.json()
 
 # Print the result
 # print(data)
-# print(data['elements'][0])
-print(data['elements'][0]['lat'])
-print(data['elements'][0]['lon'])
-print(data['elements'][0]['tags']['name'])
-print(data['elements'][1]['lat'])
-print(data['elements'][1]['lon'])
-print(data['elements'][1]['tags']['name'])
+print(data['elements'][0])
+# print(data['elements'][0]['lat'])
+# print(data['elements'][0]['lon'])
+# print(data['elements'][0]['tags']['name'])
+# print(data['elements'][1]['lat'])
+# print(data['elements'][1]['lon'])
+# print(data['elements'][1]['tags']['name'])
 x = input('press to continue')
 
 import psycopg2
@@ -64,8 +85,8 @@ def insert_location(connection, coffee_shop, lat, long):
     cursor.close()
 
 # Example: Inserting a new location
-insert_location(connection, data['elements'][0]['tags']['name'], data['elements'][0]['lat'], data['elements'][0]['lon'])
-insert_location(connection, data['elements'][1]['tags']['name'], data['elements'][1]['lat'], data['elements'][1]['lon'])
+# insert_location(connection, data['elements'][0]['tags']['name'], data['elements'][0]['lat'], data['elements'][0]['lon'])
+# insert_location(connection, data['elements'][1]['tags']['name'], data['elements'][1]['lat'], data['elements'][1]['lon'])
 x = input('press to continue')
 
 from sqlalchemy import create_engine
@@ -92,5 +113,6 @@ db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
 # db_chain.run("What neighborhood is the 'Broad St' station in?")
 # db_chain.run("Using spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
 # db_chain.run("Using ST_Contains and spatial joins, can you tell me what neighborhood the 'Broad St' station is in?")
-db_chain.run("Which coffee shop is nearest to Angel Cafe & Deli?")
+# db_chain.run("Which coffee shop is nearest to Angel Cafe & Deli?")
+db_chain.run("What coffee shop is nearest to the coordinates (37.787162, -122.410725)?")
 x = input('press to continue')
