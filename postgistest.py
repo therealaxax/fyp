@@ -20,7 +20,7 @@ db_info = {
 # sql_str = 'postgresql://{user}:{password}@{host}:{port}/{dbname}'.format
 # db_connection = create_engine(sql_str(**db_info))
 db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/nyc")
-llm = OpenAI(openai_api_key = "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", temperature=0, verbose=True)
+llm = OpenAI(openai_api_key = "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", temperature=0, verbose=True, model="gpt-3.5-turbo-instruct")
 db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
 
 # db_chain.run("How many neighborhoods are there in nyc?")
