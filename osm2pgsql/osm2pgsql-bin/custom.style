@@ -1,0 +1,4 @@
+node,way   highway      text         linear
+node       amenity      text         linear
+node       name         text         linear
+node,way public_transport text linear
