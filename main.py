@@ -43,8 +43,10 @@ import sqlagentwithtools_module
 ################################################################################################################
 
 custom_tool_list = sqlagentwithtools_module.fewshots()
+custom_tool_list.append(sqlagentwithtools_module.propernounsearchtool(["Brooklyn"],["Staten Island"]))
 # print(custom_tool_list)
 agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_list)
 # print(agent_executor)
 # agent_executor.run("How long is 'Walsh Ct'?")
-agent_executor.run("How long is 'Avenue O'?")
+# agent_executor.run("How long is 'Avenue O'?")
+agent_executor.run("How many homicides are there in 'Sten Iand'?")

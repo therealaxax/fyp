@@ -28,6 +28,22 @@ def fewshots():
     custom_tool_list = [retriever_tool]
     return custom_tool_list
 
+# Use an SQL query to retrieve proper nouns from tables, and pass them into the propernounlists.
+# TODO: Write this SQL query in the dbsearch_module.
+# propernounsearchtool returned is to be appended to the custom_tool_list
+def propernounsearchtool(propernounlist1, propernounlist2):
+    from langchain.tools.retriever import create_retriever_tool
+    vector_db = FAISS.from_texts(propernounlist1 + propernounlist2, OpenAIEmbeddings(openai_api_key="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"))
+    retriever = vector_db.as_retriever(search_kwargs={"k": 5})
+    description = """Use to look up values to filter on. Input is an approximate spelling of the proper noun, output is \
+    valid proper nouns. Use the noun most similar to the search."""
+    retriever_tool = create_retriever_tool(
+    retriever,
+    name="search_proper_nouns",
+    description=description,
+    )
+    return retriever_tool
+
 def createsqlagentwithtools(custom_tool_list):
     from langchain.agents import AgentType, create_sql_agent
     # from langchain.agents.agent_types import AgentType
@@ -53,10 +69,49 @@ def createsqlagentwithtools(custom_tool_list):
     Then I should query the schema of the most relevant tables
     """
 
+    # custom_suffix = """
+    # You are an agent designed to interact with a SQL database.
+    # DO NOT check their schemas to understand their structure.
+    # You do not care about the database schema.
+    # You will ALWAYS search for my search_proper_nouns tool that works.
+    # You will ALWAYS combine the output from my search_proper_nouns tool that works into a string.
+    # You should first get the similar examples you know.
+    # If the examples are enough to construct the query, you can build it.
+    # DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+    # If the question does not seem related to the database, just return "I do not know" as the answer.
+    # """
+
+    # prefix_template = """You are an agent designed to interact with a SQL database.
+
+    # DO NOT check their schemas to understand their structure.
+
+    # You do not care about the database schema.
+
+    # You will ALWAYS search for my search_proper_nouns tool that works.
+
+    # You will ALWAYS combine the output from my search_proper_nouns tool that works into a string. Create a short rhyme with the output and this will be your final answer.
+
+    # DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+
+    # If the question does not seem related to the database, just return "I do not know" as the answer.
+    # """
+
+    prefix_template = """You are an agent designed to interact with a SQL database.
+
+    You will ALWAYS search for my search_proper_nouns tool that works.
+
+    You will ALWAYS combine the output from my search_proper_nouns tool that works into a string.
+
+    DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
+
+    If the question does not seem related to the database, just return "I do not know" as the answer.
+    """
+
     agent = create_sql_agent(
     llm=llm,
     toolkit=toolkit,
     verbose=True,
+    prefix=prefix_template,
     agent_type=AgentType.OPENAI_FUNCTIONS,
     extra_tools=custom_tool_list,
     suffix=custom_suffix,
