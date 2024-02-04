@@ -1,0 +1,35 @@
+-- select * from planet_osm_roads;
+-- select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%';
+-- select building, name, way from planet_osm_point where building != 'null' and name like '%Tiong Bahru%';
+-- select building, name, way from planet_osm_roads where building != 'null' and name like '%Tiong Bahru%';
+-- select building, name, way from planet_osm_line where building != 'null' and name like '%Tiong Bahru%';
+-- select ST_AsText(way) from planet_osm_polygon;
+-- select ST_AsText(way) from planet_osm_point;
+-- select * from planet_osm_point;
+-- select name from planet_osm_polygon where name != 'null';
+-- SELECT name, ST_AsText(way) as coordinates
+-- FROM planet_osm_polygon AS outer_poly
+-- WHERE ST_Contains(outer_poly.way, (
+--     SELECT way
+--     FROM planet_osm_polygon
+--     WHERE name = 'Tekka Centre'
+--     ORDER BY way_area DESC
+--     LIMIT 1
+-- ));
+-- SELECT name, ST_AsText(way) as coordinates FROM planet_osm_polygon WHERE name = 'Tekka Centre' ORDER BY way_area DESC LIMIT 1;
+-- select name from planet_osm_polygon where name != 'null';
+-- select * from planet_osm_polygon where name = 'National Cancer Centre Singapore';
+-- select name,ST_AsText(way) from planet_osm_polygon where name = 'National Cancer Centre Singapore';
+-- SELECT name, way
+-- FROM planet_osm_polygon AS outer_poly
+-- WHERE ST_Contains(outer_poly.way, (
+--     SELECT way 
+--     FROM planet_osm_polygon 
+--     WHERE name = 'National Cancer Centre Singapore' 
+--     ORDER BY way_area DESC :
+--     LIMIT 1
+-- ));
+-- select ST_AsText(way) from planet_osm_point;
+-- select * from planet_osm_point where amenity != 'null';
+-- select * from planet_osm_line;
+-- select * from spatial_ref_sys;
