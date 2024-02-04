@@ -7,7 +7,17 @@ def fewshots():
     # from langchain_community.agent_toolkits import create_retriever_tool
     from langchain.tools.retriever import create_retriever_tool
 
-    few_shots = {"Find the length of the street with name 'Walsh Ct'." : " SELECT ST_Length(geom) FROM nyc_streets WHERE name = 'Walsh Ct'; "}
+    # few_shots = {"Find the length of the street with name 'Walsh Ct'." : " SELECT ST_Length(geom) FROM nyc_streets WHERE name = 'Walsh Ct'; "}
+    few_shots = {"How many buildings are there in 'Tiong Bahru'?" : " select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%'; ",
+    "Where is the National Cancer Centre Singapore located?" : """SELECT name, ST_AsText(way) as coordinates
+    FROM planet_osm_polygon AS outer_poly
+    WHERE ST_Contains(outer_poly.way, (
+        SELECT way 
+        FROM planet_osm_polygon 
+        WHERE name = 'National Cancer Centre Singapore' 
+        ORDER BY way_area DESC 
+        LIMIT 1
+    ));"""}
 
     few_shot_docs = [
         Document(page_content=question, metadata={"sql_query": few_shots[question]})
@@ -19,6 +29,7 @@ def fewshots():
 
     tool_description = """
     This tool will help you understand similar examples to adapt them to the user question.
+    If possible, invoke the database query as-is directly from the similar examples.
     Input to this tool should be the user question.
     """
 
@@ -55,7 +66,8 @@ def createsqlagentwithtools(custom_tool_list):
     from langchain_openai import ChatOpenAI
     # from langchain.llms import OpenAI
 
-    db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/nyc")
+    # db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/nyc")
+    db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/osm2pgsqldb")
     # db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/anotherlocationtestdb")
     # print(type(db))
     # llm = OpenAI(temperature=0, openai_api_key="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", model="gpt-3.5-turbo-instruct")

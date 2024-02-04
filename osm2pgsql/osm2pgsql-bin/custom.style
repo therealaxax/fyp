@@ -1,4 +1,2 @@
-node,way   highway      text         linear
-node       amenity      text         linear
-node       name         text         linear
-node,way public_transport text linear
+node,way   shop         text         polygon
+node,way   office       text         polygon
