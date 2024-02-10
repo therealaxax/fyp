@@ -17,7 +17,19 @@ def fewshots():
         WHERE name = 'National Cancer Centre Singapore' 
         ORDER BY way_area DESC 
         LIMIT 1
-    ));"""}
+    ));""",
+    "Is the National Cancer Centre Singapore west of Tekka Centre?" : """SELECT
+    (SELECT ST_X(ST_Centroid(way))
+     FROM planet_osm_polygon
+     WHERE name = 'National Cancer Centre Singapore'
+     ORDER BY way_area DESC
+     LIMIT 1)
+    <
+    (SELECT ST_X(ST_Centroid(way))
+     FROM planet_osm_polygon
+     WHERE name = 'Tekka Centre'
+     ORDER BY way_area DESC
+     LIMIT 1) AS isWest;"""}
 
     few_shot_docs = [
         Document(page_content=question, metadata={"sql_query": few_shots[question]})

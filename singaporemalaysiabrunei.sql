@@ -1,4 +1,16 @@
--- select * from planet_osm_roads;
+-- select name, ST_X(ST_Centroid(way)), way_area from planet_osm_polygon where name = 'National Cancer Centre Singapore' or name = 'Tekka Centre';
+-- SELECT
+--     (SELECT ST_X(ST_Centroid(way))
+--      FROM planet_osm_polygon
+--      WHERE name = 'National Cancer Centre Singapore'
+--      ORDER BY way_area DESC
+--      LIMIT 1)
+--     <
+--     (SELECT ST_X(ST_Centroid(way))
+--      FROM planet_osm_polygon
+--      WHERE name = 'Tekka Centre'
+--      ORDER BY way_area DESC
+--      LIMIT 1) AS isWest;
 -- select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%';
 -- select building, name, way from planet_osm_point where building != 'null' and name like '%Tiong Bahru%';
 -- select building, name, way from planet_osm_roads where building != 'null' and name like '%Tiong Bahru%';
@@ -6,7 +18,7 @@
 -- select ST_AsText(way) from planet_osm_polygon;
 -- select ST_AsText(way) from planet_osm_point;
 -- select * from planet_osm_point;
--- select name from planet_osm_polygon where name != 'null';
+select name from planet_osm_polygon where name != 'null';
 -- SELECT name, ST_AsText(way) as coordinates
 -- FROM planet_osm_polygon AS outer_poly
 -- WHERE ST_Contains(outer_poly.way, (
