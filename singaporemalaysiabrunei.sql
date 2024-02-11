@@ -18,7 +18,7 @@
 -- select ST_AsText(way) from planet_osm_polygon;
 -- select ST_AsText(way) from planet_osm_point;
 -- select * from planet_osm_point;
-select name from planet_osm_polygon where name != 'null';
+-- select name from planet_osm_polygon where name != 'null';
 -- SELECT name, ST_AsText(way) as coordinates
 -- FROM planet_osm_polygon AS outer_poly
 -- WHERE ST_Contains(outer_poly.way, (
@@ -41,7 +41,27 @@ select name from planet_osm_polygon where name != 'null';
 --     ORDER BY way_area DESC :
 --     LIMIT 1
 -- ));
+-- select * from planet_osm_point where name != 'null';
 -- select ST_AsText(way) from planet_osm_point;
--- select * from planet_osm_point where amenity != 'null';
--- select * from planet_osm_line;
+-- select name from planet_osm_polygon 
+-- where name != 'null' 
+-- and leisure = 'park' 
+-- order by ST_Area(way) ?
+-- desc limit 1;
+select * from planet_osm_point where name = 'ERP';
+-- select * from planet_osm_polygon where name = 'Maxwell Food Center';
+-- SELECT a.*
+-- FROM planet_osm_point a
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM planet_osm_polygon b
+--     WHERE a.name = b.name
+-- ) and a.name != 'null';
+-- select * from planet_osm_polygon where name = '7-Eleven';
+-- select name from planet_osm_polygon where name != 'null' and leisure = 'park' order by way_area desc limit 1;
+-- select name, ST_AsText(way) from planet_osm_line where name = 'Bishan Street 13';
+-- SELECT SUM(ST_Length(way)) AS total_distance
+-- FROM (
+--     select way from planet_osm_line where name = 'Bishan Street 13'
+-- ) AS linestrings;
 -- select * from spatial_ref_sys;
