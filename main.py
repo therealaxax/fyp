@@ -53,5 +53,5 @@ agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_li
 # agent_executor.run("How many buildings are there in 'Tiong Bahru'?")
 # agent_executor.run("Where is Tekka Centre located?")
 # agent_executor.run("How short is Parit Setongkat?")
-# agent_executor.run("Is Faber Point on the east of Keppel Distripark?")()
+# agent_executor.run("Is Faber Point on the east of Keppel Distripark?")
 agent_executor.run("Which is the smallest army airfield by area?")
