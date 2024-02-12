@@ -23,13 +23,14 @@
 -- FROM planet_osm_polygon AS outer_poly
 -- WHERE ST_Contains(outer_poly.way, (
 --     SELECT way
---     FROM planet_osm_polygon
---     WHERE name = 'Tekka Centre'
+--     FROM planet_osm_point
+--     WHERE name = 'ERP'
 --     ORDER BY way_area DESC
 --     LIMIT 1
 -- ));
 -- SELECT name, ST_AsText(way) as coordinates FROM planet_osm_polygon WHERE name = 'Tekka Centre' ORDER BY way_area DESC LIMIT 1;
--- select name from planet_osm_polygon where name != 'null';
+-- select * from planet_osm_polygon where name != 'null' and military != 'null';
+-- select * from planet_osm_line where name != 'null';
 -- select * from planet_osm_polygon where name = 'National Cancer Centre Singapore';
 -- select name,ST_AsText(way) from planet_osm_polygon where name = 'National Cancer Centre Singapore';
 -- SELECT name, way
@@ -48,7 +49,63 @@
 -- and leisure = 'park' 
 -- order by ST_Area(way) ?
 -- desc limit 1;
-select * from planet_osm_point where name = 'ERP';
+-- WITH erp AS (
+--   SELECT * 
+--   FROM planet_osm_point 
+--   WHERE name = 'ERP'
+-- ), 
+-- foodcenter AS (
+--   SELECT * 
+--   FROM planet_osm_polygon 
+--   WHERE name = 'Maxwell Food Center'
+-- )
+
+-- select * from planet_osm_polygon where name != 'null';
+-- select * from planet_osm_point where name != 'null';
+-- SELECT *
+-- FROM planet_osm_polygon AS outer_poly
+-- WHERE ST_Contains(outer_poly.way, (
+-- 	WITH erp AS (
+-- 	  SELECT * 
+-- 	  FROM planet_osm_point 
+-- 	  WHERE name = 'ERP'
+-- 	), 
+-- 	foodcenter AS (
+-- 	  SELECT * 
+-- 	  FROM planet_osm_polygon 
+-- 	  WHERE name = 'Maxwell Food Center'
+-- 	)
+-- 	select erp.way
+-- 	FROM erp, foodcenter
+-- 	ORDER BY ST_Distance(erp.way, foodcenter.way) ASC
+-- 	LIMIT 1
+-- ));
+
+	WITH erp AS (
+	  SELECT * 
+	  FROM planet_osm_point 
+	  WHERE name = 'ERP'
+	), 
+	foodcenter AS (
+	  SELECT * 
+	  FROM planet_osm_polygon 
+	  WHERE name = 'Maxwell Food Center'
+	)
+	select *
+	FROM erp, foodcenter
+	ORDER BY ST_Distance(erp.way, foodcenter.way) ASC
+	LIMIT 1;
+
+-- SELECT name, ST_AsText(way) as coordinates
+-- FROM planet_osm_polygon AS outer_poly
+-- WHERE ST_Contains(outer_poly.way, (
+--     SELECT way
+--     FROM planet_osm_polygon
+--     WHERE name = 'Tekka Centre'
+--     ORDER BY way_area DESC
+--     LIMIT 1
+-- ));
+-- select * from planet_osm_point where name = 'ERP';
 -- select * from planet_osm_polygon where name = 'Maxwell Food Center';
 -- SELECT a.*
 -- FROM planet_osm_point a

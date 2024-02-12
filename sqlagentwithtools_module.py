@@ -29,7 +29,17 @@ def fewshots():
      FROM planet_osm_polygon
      WHERE name = 'Tekka Centre'
      ORDER BY way_area DESC
-     LIMIT 1) AS isWest;"""}
+     LIMIT 1) AS isWest;""",
+     "What is the length of Bishan Street 13" : """SELECT SUM(ST_Length(way)) AS total_distance
+    FROM (
+    select way from planet_osm_line where name = 'Bishan Street 13'
+    ) AS linestrings;
+    """,
+    "Which is the largest park by area?" : """select name from planet_osm_polygon 
+    where name != 'null' 
+    and leisure = 'park' 
+    order by ST_Area(way) 
+    desc limit 1;"""}
 
     few_shot_docs = [
         Document(page_content=question, metadata={"sql_query": few_shots[question]})
