@@ -2,15 +2,11 @@
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-  <h1>Flaskr</h1>
+  <h1>Spatial Database SQL Agent</h1>
   <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('langchainmodel.register') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('langchainmodel.register') }}">Register</a>
-      <li><a href="{{ url_for('langchainmodel.register') }}">Log In</a>
-    {% endif %}
+    <li><a href="{{ url_for('langchainmodel.input') }}">Input Query</a>
+    <li><a href="{{ url_for('langchainmodel.dataimportview') }}">Import Data</a>
+    <li><a href="{{ url_for('langchainmodel.input') }}">Configure Few Shot Prompts</a>
   </ul>
 </nav>
 <section class="content">
