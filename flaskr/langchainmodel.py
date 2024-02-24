@@ -17,6 +17,8 @@ def input():
 
         if error is None:
             custom_tool_list = sqlagentwithtools_module.fewshots()
+            custom_tool_list.append(sqlagentwithtools_module.propernounsearchtool())
+            print(custom_tool_list)
             agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_list)
             flash(agent_executor.run(query))
         else:
@@ -45,7 +47,10 @@ def fewshotsview():
         error = None
 
         if error is None:
-            dbsearch_module.insert_single_col_fewshots(connection, request.form['fewshotexamplequestion'], request.form['fewshotexamplequery'])
+            if request.form['fewshotexamplequestion'] != '' and request.form['fewshotexamplequery'] != '':
+                dbsearch_module.insert_single_col_fewshots(connection, request.form['fewshotexamplequestion'], request.form['fewshotexamplequery'])
+            if request.form['propernoun'] != '':
+                dbsearch_module.insert_single_col_propernouns(connection, request.form['propernoun'])
         else:
             return redirect(url_for("langchainmodel.fewshotsview"))
 

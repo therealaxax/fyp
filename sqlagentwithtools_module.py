@@ -68,9 +68,13 @@ def fewshots():
 # Use an SQL query to retrieve proper nouns from tables, and pass them into the propernounlists.
 # TODO: Write this SQL query in the dbsearch_module.
 # propernounsearchtool returned is to be appended to the custom_tool_list
-def propernounsearchtool(propernounlist1, propernounlist2):
+def propernounsearchtool():
     from langchain.tools.retriever import create_retriever_tool
-    vector_db = FAISS.from_texts(propernounlist1 + propernounlist2, OpenAIEmbeddings(openai_api_key="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"))
+    connection = dbsearch_module.create_connection("fewshots")
+    propernounlist = dbsearch_module.select_query_list("SELECT * from propernouns;", connection)
+    # propernounlist = ["Faber Point", "Tekka Centre"]
+    print(propernounlist)
+    vector_db = FAISS.from_texts(propernounlist, OpenAIEmbeddings(openai_api_key="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"))
     retriever = vector_db.as_retriever(search_kwargs={"k": 5})
     description = """Use to look up values to filter on. Input is an approximate spelling of the proper noun, output is \
     valid proper nouns. Use the noun most similar to the search."""
