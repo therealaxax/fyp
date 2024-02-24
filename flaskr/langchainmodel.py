@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, request, render_template, redirect, url_for
 from FYP import sqlagentwithtools_module
 from FYP import importdata
+from FYP import dbsearch_module
 
 bp = Blueprint('langchainmodel', __name__, url_prefix='/langchainmodel')
 
@@ -35,3 +36,17 @@ def dataimportview():
             return redirect(url_for("langchainmodel.dataimportview"))
 
     return render_template('langchainmodel/dataimportview.html')
+
+@bp.route('/fewshotsview', methods=('GET', 'POST'))
+def fewshotsview():
+    connection = dbsearch_module.create_connection("fewshots")
+
+    if request.method == 'POST':
+        error = None
+
+        if error is None:
+            dbsearch_module.insert_single_col_fewshots(connection, request.form['fewshotexamplequestion'], request.form['fewshotexamplequery'])
+        else:
+            return redirect(url_for("langchainmodel.fewshotsview"))
+
+    return render_template('langchainmodel/fewshotsview.html')

@@ -1,6 +1,7 @@
 from langchain.schema import Document
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OpenAIEmbeddings
+from FYP import dbsearch_module
 
 def fewshots():
     # from langchain.agents.agent_toolkits import create_retriever_tool
@@ -8,38 +9,41 @@ def fewshots():
     from langchain.tools.retriever import create_retriever_tool
 
     # few_shots = {"Find the length of the street with name 'Walsh Ct'." : " SELECT ST_Length(geom) FROM nyc_streets WHERE name = 'Walsh Ct'; "}
-    few_shots = {"How many buildings are there in 'Tiong Bahru'?" : " select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%'; ",
-    "Where is the National Cancer Centre Singapore located?" : """SELECT name, ST_AsText(way) as coordinates
-    FROM planet_osm_polygon AS outer_poly
-    WHERE ST_Contains(outer_poly.way, (
-        SELECT way 
-        FROM planet_osm_polygon 
-        WHERE name = 'National Cancer Centre Singapore' 
-        ORDER BY way_area DESC 
-        LIMIT 1
-    ));""",
-    "Is the National Cancer Centre Singapore west of Tekka Centre?" : """SELECT
-    (SELECT ST_X(ST_Centroid(way))
-     FROM planet_osm_polygon
-     WHERE name = 'National Cancer Centre Singapore'
-     ORDER BY way_area DESC
-     LIMIT 1)
-    <
-    (SELECT ST_X(ST_Centroid(way))
-     FROM planet_osm_polygon
-     WHERE name = 'Tekka Centre'
-     ORDER BY way_area DESC
-     LIMIT 1) AS isWest;""",
-     "What is the length of Bishan Street 13" : """SELECT SUM(ST_Length(way)) AS total_distance
-    FROM (
-    select way from planet_osm_line where name = 'Bishan Street 13'
-    ) AS linestrings;
-    """,
-    "Which is the largest park by area?" : """select name from planet_osm_polygon 
-    where name != 'null' 
-    and leisure = 'park' 
-    order by ST_Area(way) 
-    desc limit 1;"""}
+    # few_shots = {"How many buildings are there in 'Tiong Bahru'?" : " select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%'; ",
+    # "Where is the National Cancer Centre Singapore located?" : """SELECT name, ST_AsText(way) as coordinates
+    # FROM planet_osm_polygon AS outer_poly
+    # WHERE ST_Contains(outer_poly.way, (
+    #     SELECT way 
+    #     FROM planet_osm_polygon 
+    #     WHERE name = 'National Cancer Centre Singapore' 
+    #     ORDER BY way_area DESC 
+    #     LIMIT 1
+    # ));""",
+    # "Is the National Cancer Centre Singapore west of Tekka Centre?" : """SELECT
+    # (SELECT ST_X(ST_Centroid(way))
+    #  FROM planet_osm_polygon
+    #  WHERE name = 'National Cancer Centre Singapore'
+    #  ORDER BY way_area DESC
+    #  LIMIT 1)
+    # <
+    # (SELECT ST_X(ST_Centroid(way))
+    #  FROM planet_osm_polygon
+    #  WHERE name = 'Tekka Centre'
+    #  ORDER BY way_area DESC
+    #  LIMIT 1) AS isWest;""",
+    #  "What is the length of Bishan Street 13" : """SELECT SUM(ST_Length(way)) AS total_distance
+    # FROM (
+    # select way from planet_osm_line where name = 'Bishan Street 13'
+    # ) AS linestrings;
+    # """,
+    # "Which is the largest park by area?" : """select name from planet_osm_polygon 
+    # where name != 'null' 
+    # and leisure = 'park' 
+    # order by ST_Area(way) 
+    # desc limit 1;"""}
+
+    connection = dbsearch_module.create_connection("fewshots")
+    few_shots = dbsearch_module.select_query("SELECT * from fewshotexamples;", connection)
 
     few_shot_docs = [
         Document(page_content=question, metadata={"sql_query": few_shots[question]})

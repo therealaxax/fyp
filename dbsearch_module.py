@@ -19,6 +19,15 @@ def create_connection(database):
 def select_query(sql, connection):
     cursor = connection.cursor()
     cursor.execute(sql)
-    return cursor.fetchall()
-    # connection.commit()
-    # cursor.close()
+    results = cursor.fetchall()
+    # Convert results to a dictionary with column 1 as keys and column 2 as values
+    results_dict = {row[0]: row[1] for row in results}
+    cursor.close()
+    return results_dict
+
+def insert_single_col_fewshots(connection, query, question):
+    sql = "INSERT INTO fewshotexamples (query, question) VALUES (%s, %s)"
+    cursor = connection.cursor()
+    cursor.execute(sql, (question, query))
+    connection.commit()
+    print("Insertion success")
