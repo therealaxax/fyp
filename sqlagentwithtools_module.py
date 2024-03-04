@@ -105,8 +105,8 @@ def createsqlagentwithtools(custom_tool_list):
     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
     custom_suffix = """
-    I should first get the similar examples I know.
-    If the examples are enough to construct the query, I can build it.
+    I should first get the similar examples I know after checking that the proper nouns are spelled correctly.
+    If the examples are enough to construct the query, I can build it. I will not copy the example directly, but adapt the example to fit the user question.
     Otherwise, I can then look at the tables in the database to see what I can query.
     Then I should query the schema of the most relevant tables
     """
@@ -143,6 +143,8 @@ def createsqlagentwithtools(custom_tool_list):
     You will ALWAYS search for my search_proper_nouns tool that works.
 
     You will ALWAYS combine the output from my search_proper_nouns tool that works into a string.
+
+    You will ALWAYS adapt the example from my sql_get_similar_examples tool to fit the user question.
 
     DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
 
