@@ -12,21 +12,33 @@
   </form>
   <div class="separatingelement"></div>
   <h1>Recently Queried</h1>
-  <table>
+
+  <script>
+    window.onload = function() {
+      var query = "{{data.query}}";
+      var response = "{{data.response}}"
+      if(query != "empty" && response != "empty") {
+          addQueryAndResponseToTable(query, response);
+      }
+      // addQueryAndResponseToTable(query, response);
+    };
+
+    function addQueryAndResponseToTable(query, response) {
+        var table = document.getElementById('responseTable');
+        var newRow = table.insertRow(-1);
+        var queryCell = newRow.insertCell(0);
+        var responseCell = newRow.insertCell(1);
+        var queryText = document.createTextNode(query)
+        var responseText = document.createTextNode(response)
+        queryCell.appendChild(queryText);
+        responseCell.appendChild(responseText);
+    }
+  </script>
+
+  <table id="responseTable">
     <tr>
-      <th>Header 1</th>
-      <th>Header 2</th>
-      <th>Header 3</th>
-  </tr>
-  <tr>
-      <td>Row 1, Cell 1</td>
-      <td>Row 1, Cell 2</td>
-      <td>Row 1, Cell 3</td>
-  </tr>
-  <tr>
-      <td>Row 2, Cell 1</td>
-      <td>Row 2, Cell 2</td>
-      <td>Row 2, Cell 3</td>
+      <th>Query</th>
+      <th>Response</th>
   </tr>
   </table>
 {% endblock %}

@@ -7,8 +7,10 @@ bp = Blueprint('langchainmodel', __name__, url_prefix='/langchainmodel')
 
 @bp.route('/input', methods=('GET', 'POST'))
 def input():
+    data = {"query": "empty", "response": "empty"}
     if request.method == 'POST':
         query = request.form['query']
+        data["query"] = query
         # db = get_db()
         error = None
 
@@ -20,11 +22,14 @@ def input():
             custom_tool_list.append(sqlagentwithtools_module.propernounsearchtool())
             print(custom_tool_list)
             agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_list)
-            flash(agent_executor.run(query))
+            # flash(agent_executor.run(query))
+            response = agent_executor.run(query)
+            flash(response)
+            data["response"] = response
         else:
             return redirect(url_for("langchainmodel.input"))
 
-    return render_template('langchainmodel/input.html')
+    return render_template('langchainmodel/input.html', data=data)
 
 @bp.route('/dataimportview', methods=('GET', 'POST'))
 def dataimportview():
