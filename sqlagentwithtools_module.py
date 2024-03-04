@@ -155,6 +155,7 @@ def createsqlagentwithtools(custom_tool_list):
     llm=llm,
     toolkit=toolkit,
     verbose=True,
+    agent_executor_kwargs={"return_intermediate_steps": True},
     prefix=prefix_template,
     agent_type=AgentType.OPENAI_FUNCTIONS,
     extra_tools=custom_tool_list,
