@@ -60,7 +60,22 @@
 --   WHERE name = 'Maxwell Food Center'
 -- )
 
--- select * from planet_osm_polygon where name != 'null';
+SELECT poly1.name
+FROM planet_osm_polygon AS poly1
+INNER JOIN planet_osm_polygon AS poly2
+ON ST_DWithin(poly1.way, poly2.way, 1000)
+WHERE poly1.name != 'null' AND poly1.amenity = 'bank'
+AND poly2.amenity = 'office';
+
+-- select * from planet_osm_polygon where name != 'null' and amenity != 'null'; 
+-- select distinct amenity from planet_osm_polygon where name != 'null' and amenity != 'null';
+-- SELECT poly1.name
+-- FROM planet_osm_polygon AS poly1
+-- INNER JOIN planet_osm_polygon AS poly2
+-- ON ST_Touches(poly1.way, poly2.way)
+-- WHERE poly1.name != 'null' AND poly2.name = 'Katong Park';
+-- WHERE poly1.name != 'null' AND poly1.amenity != 'null'
+-- AND poly2.name = 'Ang Mo Kio Public Library';
 -- select * from planet_osm_point where name != 'null';
 -- SELECT *
 -- FROM planet_osm_polygon AS outer_poly
@@ -81,20 +96,20 @@
 -- 	LIMIT 1
 -- ));
 
-	WITH erp AS (
-	  SELECT * 
-	  FROM planet_osm_point 
-	  WHERE name = 'ERP'
-	), 
-	foodcenter AS (
-	  SELECT * 
-	  FROM planet_osm_polygon 
-	  WHERE name = 'Maxwell Food Center'
-	)
-	select *
-	FROM erp, foodcenter
-	ORDER BY ST_Distance(erp.way, foodcenter.way) ASC
-	LIMIT 1;
+-- 	WITH erp AS (
+-- 	  SELECT * 
+-- 	  FROM planet_osm_point 
+-- 	  WHERE name = 'ERP'
+-- 	), 
+-- 	foodcenter AS (
+-- 	  SELECT * 
+-- 	  FROM planet_osm_polygon 
+-- 	  WHERE name = 'Maxwell Food Center'
+-- 	)
+-- 	select *
+-- 	FROM erp, foodcenter
+-- 	ORDER BY ST_Distance(erp.way, foodcenter.way) ASC
+-- 	LIMIT 1;
 
 -- SELECT name, ST_AsText(way) as coordinates
 -- FROM planet_osm_polygon AS outer_poly
