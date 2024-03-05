@@ -13,5 +13,91 @@
     <h2>Proper Noun</h2>
     <input name="propernoun" id="propernoun">
     <input type="submit" value="Insert">
+    <div>
+      <button name="displaynoun" value="displaynounclicked">Display Proper Nouns</button>
+      <button name="displayfewshotexamplequery" value="displayfewshotexamplequeryclicked">Display Few Shot Question Examples</button>
+    </div>
   </form>
+  <table id="propernounTable"></table>
+  <table id="fewshotexamplequeryTable"></table>
+
+  <script>
+    window.onload = function() {
+      var propernoun = "{{data.propernouns}}";
+      var fewshotexamplequery = "{{data.fewshotexamplequery}}"
+      if(propernoun != "empty") {
+          displayProperNouns(propernoun);
+      } else if(fewshotexamplequery != "empty") {
+          displayFewShotExampleQuery(fewshotexamplequery);
+      }
+    };
+
+    function displayProperNouns(propernoun) {
+      propernoun = propernoun.replaceAll("&#39;", "");
+      propernoun = propernoun.replaceAll("[", "");
+      propernoun = propernoun.replaceAll("]", "");
+      propernoun = propernoun.split(',');
+      var propernounTable = document.getElementById('propernounTable');
+
+      propernounTable.style.width = '100%';
+      propernounTable.style.borderCollapse = 'collapse';
+      propernounTable.style.backgroundColor = '#f2f2f2';
+
+      var newRow = propernounTable.insertRow(-1);
+      var headerCell = newRow.insertCell(0);
+      headerCell.appendChild(document.createTextNode("Proper Nouns"));
+      // console.log(propernoun.length);
+      
+      headerCell.style.backgroundColor = '#377ba8';
+      headerCell.style.color = 'white';
+      headerCell.style.padding = '1em';
+      headerCell.style.border = '1px solid black';
+      headerCell.style.textAlign = 'center';
+
+      for (let i = 0; i < propernoun.length; i++) {
+        var newRow = propernounTable.insertRow(-1);
+        var headerCell = newRow.insertCell(0);
+        headerCell.appendChild(document.createTextNode(propernoun[i]));
+
+        headerCell.style.padding = '1em';
+        headerCell.style.border = '1px solid black';
+        headerCell.style.textAlign = 'center';
+      }
+    }
+
+    function displayFewShotExampleQuery(fewshotexamplequery) {
+      fewshotexamplequery = fewshotexamplequery.replaceAll("&#39;", "");
+      fewshotexamplequery = fewshotexamplequery.replaceAll("&#34;", "");
+      fewshotexamplequery = fewshotexamplequery.replaceAll("[", "");
+      fewshotexamplequery = fewshotexamplequery.replaceAll("]", "");
+      fewshotexamplequery = fewshotexamplequery.split(',');
+      var fewshotTable = document.getElementById('fewshotexamplequeryTable');
+
+      fewshotTable.style.width = '100%';
+      fewshotTable.style.borderCollapse = 'collapse';
+      fewshotTable.style.backgroundColor = '#f2f2f2';
+
+      var newRow = fewshotTable.insertRow(-1);
+      var headerCell = newRow.insertCell(0);
+      headerCell.appendChild(document.createTextNode("Example Question"));
+      // console.log(propernoun.length);
+      // console.log(typeof fewshotexamplequery);
+
+      headerCell.style.backgroundColor = '#377ba8';
+      headerCell.style.color = 'white';
+      headerCell.style.padding = '1em';
+      headerCell.style.border = '1px solid black';
+      headerCell.style.textAlign = 'center';
+
+      for (let i = 0; i < fewshotexamplequery.length; i++) {
+        var newRow = fewshotTable.insertRow(-1);
+        var headerCell = newRow.insertCell(0);
+        headerCell.appendChild(document.createTextNode(fewshotexamplequery[i]));
+
+        headerCell.style.padding = '1em';
+        headerCell.style.border = '1px solid black';
+        headerCell.style.textAlign = 'center';
+      }
+    }
+  </script>
 {% endblock %}

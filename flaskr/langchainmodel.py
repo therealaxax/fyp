@@ -48,6 +48,7 @@ def dataimportview():
 @bp.route('/fewshotsview', methods=('GET', 'POST'))
 def fewshotsview():
     connection = dbsearch_module.create_connection("fewshots")
+    data = {"propernouns": "empty", "fewshotexamplequery": "empty"}
 
     if request.method == 'POST':
         error = None
@@ -57,7 +58,17 @@ def fewshotsview():
                 dbsearch_module.insert_single_col_fewshots(connection, request.form['fewshotexamplequestion'], request.form['fewshotexamplequery'])
             if request.form['propernoun'] != '':
                 dbsearch_module.insert_single_col_propernouns(connection, request.form['propernoun'])
+            if request.form.get('displaynoun') == 'displaynounclicked':
+                sql = "SELECT * FROM propernouns"
+                flash("List of proper nouns displayed below.")
+                # flash(dbsearch_module.select_query_list(sql, connection))
+                data["propernouns"] = dbsearch_module.select_query_list(sql, connection)
+            if request.form.get('displayfewshotexamplequery') == 'displayfewshotexamplequeryclicked':
+                sql = "SELECT * FROM fewshotexamples"
+                flash("Few shot question examples displayed below.")
+                # flash(dbsearch_module.select_query_list(sql, connection))
+                data["fewshotexamplequery"] = dbsearch_module.select_query_list(sql, connection)
         else:
             return redirect(url_for("langchainmodel.fewshotsview"))
 
-    return render_template('langchainmodel/fewshotsview.html')
+    return render_template('langchainmodel/fewshotsview.html', data=data)

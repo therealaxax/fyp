@@ -49,6 +49,8 @@
       // responseCell.appendChild(responseText);
       queryHeader.textContent = "Query";
       responseHeader.textContent = "Response";
+      response = response.replaceAll("&#39;", "");
+      response = response.replaceAll("&#34;", "");
       queryCell.textContent = query;
       responseCell.textContent = response;
     }
