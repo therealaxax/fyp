@@ -23,8 +23,9 @@ def input():
             print(custom_tool_list)
             agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_list)
             # flash(agent_executor.run(query))
-            response = agent_executor.invoke(query)
-            flash(response)
+            # response = agent_executor.invoke(query)
+            response = agent_executor.run(query)
+            # flash(response)
             data["response"] = response
         else:
             return redirect(url_for("langchainmodel.input"))

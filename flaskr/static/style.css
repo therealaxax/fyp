@@ -6,6 +6,8 @@ html {
     background-size: cover; }
 body { max-width: 960px; margin: 0 auto; background: white; opacity: 80%;}
 h1 { font-family: serif; color: #377ba8; margin: 1rem 0; }
+h2 { font-family: serif; color: #377ba8; margin: 1rem 0; font-size: 100%;}
+p { text-align: center; font-size: 110%; font-family: "cambria"; color: darkslategray;}
 a { color: #377ba8; }
 hr { border: none; border-top: 1px solid lightgray; }
 nav { background: lightgray; display: flex; align-items: center }
@@ -31,4 +33,3 @@ input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; border-radius: 4px; border: 2px solid #377ba8; color: white; background-color: #377ba8; transition-duration: 0.4s; min-width: 5em; }
 input[type=submit]:hover { align-self: start; border-radius: 4px; border: 2px solid lightskyblue; color: white; background-color: lightskyblue; transition-duration: 0.4s; min-width: 5em; }
 .navbar:hover { background-color: lightskyblue; transition-duration: 0.4s;}
-.separatingelement { height: 1em; margin: 1em; background-color: transparent;}
