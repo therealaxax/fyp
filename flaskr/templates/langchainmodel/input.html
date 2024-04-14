@@ -21,32 +21,15 @@
       var query = "{{data.query}}";
       var response = "{{data.response}}"
       if(query != "empty" && response != "empty") {
-          // addQueryAndResponseToTable(query, response);
           displayQueryAndResponse(query, response);
       }
-      // addQueryAndResponseToTable(query, response);
     };
-
-    // function addQueryAndResponseToTable(query, response) {
-    //     var table = document.getElementById('responseTable');
-    //     var newRow = table.insertRow(-1);
-    //     var queryCell = newRow.insertCell(0);
-    //     var responseCell = newRow.insertCell(1);
-    //     var queryText = document.createTextNode(query)
-    //     var responseText = document.createTextNode(response)
-    //     queryCell.appendChild(queryText);
-    //     responseCell.appendChild(responseText);
-    // }
 
     function displayQueryAndResponse(query, response){
       var queryHeader = document.getElementById("queryHeader");
       var responseHeader = document.getElementById("responseHeader");
       var queryCell = document.getElementById("userQuery");
       var responseCell = document.getElementById("generatedResponse");
-      // var queryText = document.createTextNode(query)
-      // var responseText = document.createTextNode(response)
-      // queryCell.appendChild(queryText);
-      // responseCell.appendChild(responseText);
       queryHeader.textContent = "Query";
       responseHeader.textContent = "Response";
       response = response.replaceAll("&#39;", "");
@@ -56,10 +39,4 @@
     }
   </script>
 
-  <!-- <table id="responseTable">
-    <tr>
-      <th>Query</th>
-      <th>Response</th>
-  </tr>
-  </table> -->
 {% endblock %}

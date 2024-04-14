@@ -22,10 +22,7 @@ def input():
             custom_tool_list.append(sqlagentwithtools_module.propernounsearchtool())
             print(custom_tool_list)
             agent_executor = sqlagentwithtools_module.createsqlagentwithtools(custom_tool_list)
-            # flash(agent_executor.run(query))
-            # response = agent_executor.invoke(query)
             response = agent_executor.run(query)
-            # flash(response)
             data["response"] = response
         else:
             return redirect(url_for("langchainmodel.input"))
@@ -39,7 +36,6 @@ def dataimportview():
 
         if error is None:
             flash(importdata.performimportdata())
-            # return redirect(url_for("langchainmodel.importdata"))
         else:
             return redirect(url_for("langchainmodel.dataimportview"))
 
@@ -61,12 +57,10 @@ def fewshotsview():
             if request.form.get('displaynoun') == 'displaynounclicked':
                 sql = "SELECT * FROM propernouns"
                 flash("List of proper nouns displayed below.")
-                # flash(dbsearch_module.select_query_list(sql, connection))
                 data["propernouns"] = dbsearch_module.select_query_list(sql, connection)
             if request.form.get('displayfewshotexamplequery') == 'displayfewshotexamplequeryclicked':
                 sql = "SELECT * FROM fewshotexamples"
                 flash("Few shot question examples displayed below.")
-                # flash(dbsearch_module.select_query_list(sql, connection))
                 data["fewshotexamplequery"] = dbsearch_module.select_query_list(sql, connection)
         else:
             return redirect(url_for("langchainmodel.fewshotsview"))

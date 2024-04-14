@@ -4,43 +4,7 @@ from langchain_community.embeddings import OpenAIEmbeddings
 from FYP import dbsearch_module
 
 def fewshots():
-    # from langchain.agents.agent_toolkits import create_retriever_tool
-    # from langchain_community.agent_toolkits import create_retriever_tool
     from langchain.tools.retriever import create_retriever_tool
-
-    # few_shots = {"Find the length of the street with name 'Walsh Ct'." : " SELECT ST_Length(geom) FROM nyc_streets WHERE name = 'Walsh Ct'; "}
-    # few_shots = {"How many buildings are there in 'Tiong Bahru'?" : " select building, name, way from planet_osm_polygon where building != 'null' and name like '%Tiong Bahru%'; ",
-    # "Where is the National Cancer Centre Singapore located?" : """SELECT name, ST_AsText(way) as coordinates
-    # FROM planet_osm_polygon AS outer_poly
-    # WHERE ST_Contains(outer_poly.way, (
-    #     SELECT way 
-    #     FROM planet_osm_polygon 
-    #     WHERE name = 'National Cancer Centre Singapore' 
-    #     ORDER BY way_area DESC 
-    #     LIMIT 1
-    # ));""",
-    # "Is the National Cancer Centre Singapore west of Tekka Centre?" : """SELECT
-    # (SELECT ST_X(ST_Centroid(way))
-    #  FROM planet_osm_polygon
-    #  WHERE name = 'National Cancer Centre Singapore'
-    #  ORDER BY way_area DESC
-    #  LIMIT 1)
-    # <
-    # (SELECT ST_X(ST_Centroid(way))
-    #  FROM planet_osm_polygon
-    #  WHERE name = 'Tekka Centre'
-    #  ORDER BY way_area DESC
-    #  LIMIT 1) AS isWest;""",
-    #  "What is the length of Bishan Street 13" : """SELECT SUM(ST_Length(way)) AS total_distance
-    # FROM (
-    # select way from planet_osm_line where name = 'Bishan Street 13'
-    # ) AS linestrings;
-    # """,
-    # "Which is the largest park by area?" : """select name from planet_osm_polygon 
-    # where name != 'null' 
-    # and leisure = 'park' 
-    # order by ST_Area(way) 
-    # desc limit 1;"""}
 
     connection = dbsearch_module.create_connection("fewshots")
     few_shots = dbsearch_module.select_query("SELECT * from fewshotexamples;", connection)
@@ -65,14 +29,10 @@ def fewshots():
     custom_tool_list = [retriever_tool]
     return custom_tool_list
 
-# Use an SQL query to retrieve proper nouns from tables, and pass them into the propernounlists.
-# TODO: Write this SQL query in the dbsearch_module.
-# propernounsearchtool returned is to be appended to the custom_tool_list
 def propernounsearchtool():
     from langchain.tools.retriever import create_retriever_tool
     connection = dbsearch_module.create_connection("fewshots")
     propernounlist = dbsearch_module.select_query_list("SELECT * from propernouns;", connection)
-    # propernounlist = ["Faber Point", "Tekka Centre"]
     print(propernounlist)
     vector_db = FAISS.from_texts(propernounlist, OpenAIEmbeddings(openai_api_key="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"))
     retriever = vector_db.as_retriever(search_kwargs={"k": 5})
@@ -87,20 +47,11 @@ def propernounsearchtool():
 
 def createsqlagentwithtools(custom_tool_list):
     from langchain.agents import AgentType, create_sql_agent
-    # from langchain.agents.agent_types import AgentType
-    # from langchain.agents import create_sql_agent
-    # from langchain.agents.agent_toolkits import SQLDatabaseToolkit
     from langchain_community.agent_toolkits import SQLDatabaseToolkit
     from langchain_community.utilities import SQLDatabase
-    # from langchain.utilities import SQLDatabase
     from langchain_openai import ChatOpenAI
-    # from langchain.llms import OpenAI
 
-    # db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/nyc")
     db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/osm2pgsqldb")
-    # db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/anotherlocationtestdb")
-    # print(type(db))
-    # llm = OpenAI(temperature=0, openai_api_key="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", model="gpt-3.5-turbo-instruct")
     llm = ChatOpenAI(temperature=0, openai_api_key="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", model_name="gpt-4")
     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
@@ -110,33 +61,6 @@ def createsqlagentwithtools(custom_tool_list):
     Otherwise, I can then look at the tables in the database to see what I can query.
     Then I should query the schema of the most relevant tables
     """
-
-    # custom_suffix = """
-    # You are an agent designed to interact with a SQL database.
-    # DO NOT check their schemas to understand their structure.
-    # You do not care about the database schema.
-    # You will ALWAYS search for my search_proper_nouns tool that works.
-    # You will ALWAYS combine the output from my search_proper_nouns tool that works into a string.
-    # You should first get the similar examples you know.
-    # If the examples are enough to construct the query, you can build it.
-    # DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
-    # If the question does not seem related to the database, just return "I do not know" as the answer.
-    # """
-
-    # prefix_template = """You are an agent designed to interact with a SQL database.
-
-    # DO NOT check their schemas to understand their structure.
-
-    # You do not care about the database schema.
-
-    # You will ALWAYS search for my search_proper_nouns tool that works.
-
-    # You will ALWAYS combine the output from my search_proper_nouns tool that works into a string. Create a short rhyme with the output and this will be your final answer.
-
-    # DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
-
-    # If the question does not seem related to the database, just return "I do not know" as the answer.
-    # """
 
     prefix_template = """You are an agent designed to interact with a SQL database.
 
