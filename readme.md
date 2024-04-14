@@ -57,12 +57,16 @@ The data used in this project is OpenStreetMap data for Malaysia, Singapore, and
 
 7. In the sqlagentwithtools_module.py file, change the string of the openai_api_key variable to the OpenAI API key. Do this inside the 3 functions, fewshots(), propernounsearchtool(), and createsqlagentwithtools(custom_tool_list).
 
-8. Change the working directory to the flaskr folder.
+8. In the createsqlagentwithtools(custom_tool_list) function in the sqlagentwithtools_module.py file, modify "postsuperzax" in the database connection string in  
+   `db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/osm2pgsqldb")`
+   to the password used to set up the local databases.
 
-9. Run the project with the following command:  
-   `flask --app flaskapp.py run --debug`
+9. Change the working directory to the flaskr folder.
 
-10. Go to http://127.0.0.1:5000/langchainmodel/input to view the landing site of the project.
+10. Run the project with the following command:  
+    `flask --app flaskapp.py run --debug`
+
+11. Go to http://127.0.0.1:5000/langchainmodel/input to view the landing site of the project.
 
 ## Configuring Few-Shot Examples and Proper Nouns
 
