@@ -43,11 +43,11 @@ This project was built in Windows and is written in Python with HTML and CSS use
    `conda install --channel conda-forge geopandas`
 
 6. Install the rest of the dependencies into the same conda environment.
-   `pip install psycopg2`
-   `pip install Flask`
-   `pip install langchain==0.0.353`
-   `pip install langchain_community==0.0.10`
-   `pip install openai==1.7.0`
+   `pip install psycopg2`  
+   `pip install Flask`  
+   `pip install langchain==0.0.353`  
+   `pip install langchain_community==0.0.10`  
+   `pip install openai==1.7.0`  
    `pip install langchain_openai==0.0.2`
 
 ## Running The Project
