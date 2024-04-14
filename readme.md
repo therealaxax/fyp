@@ -29,13 +29,13 @@ This project was built in Windows and is written in Python with HTML and CSS use
 4. Install geopandas. https://geopandas.org/en/stable/getting_started/install.html The command below installs geopandas via the conda-forge channel.  
    `conda install --channel conda-forge geopandas`
 
-5. Install the rest of the dependencies into the same conda environment. This project was built using the versions of langchain, langchain_community, openai, and langchain_openai listed in the commands below.
+5. Install the rest of the dependencies into the same conda environment. This project was built using the versions of langchain, langchain_community, openai, and langchain_openai listed in the commands below.  
    `pip install psycopg2`  
-   `pip install Flask`  
-   `pip install langchain==0.0.353`  
-   `pip install langchain_community==0.0.10`  
-   `pip install openai==1.7.0`  
-   `pip install langchain_openai==0.0.2`
+    `pip install Flask`  
+    `pip install langchain==0.0.353`  
+    `pip install langchain_community==0.0.10`  
+    `pip install openai==1.7.0`  
+    `pip install langchain_openai==0.0.2`
 
 6. This project uses the OpenAI "gpt-4" model and requires an OpenAI API key. Details of OpenAI models can be found at https://platform.openai.com/docs/models/overview . Set up an OpenAI API key following the instructions at https://platform.openai.com/docs/quickstart?context=python and note down the key. Note that each API call will be charged by OpenAI.
 
