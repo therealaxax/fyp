@@ -13,7 +13,7 @@ def fewshots():
         Document(page_content=question, metadata={"sql_query": few_shots[question]})
         for question in few_shots.keys()
     ]
-    embeddings = OpenAIEmbeddings(openai_api_key="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")
+    embeddings = OpenAIEmbeddings(openai_api_key="")
     vector_db = FAISS.from_documents(few_shot_docs, embeddings)
     retriever = vector_db.as_retriever()
 
@@ -34,7 +34,7 @@ def propernounsearchtool():
     connection = dbsearch_module.create_connection("fewshots")
     propernounlist = dbsearch_module.select_query_list("SELECT * from propernouns;", connection)
     print(propernounlist)
-    vector_db = FAISS.from_texts(propernounlist, OpenAIEmbeddings(openai_api_key="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"))
+    vector_db = FAISS.from_texts(propernounlist, OpenAIEmbeddings(openai_api_key=""))
     retriever = vector_db.as_retriever(search_kwargs={"k": 5})
     description = """Use to look up values to filter on. Input is an approximate spelling of the proper noun, output is \
     valid proper nouns. Use the noun most similar to the search."""
@@ -52,7 +52,7 @@ def createsqlagentwithtools(custom_tool_list):
     from langchain_openai import ChatOpenAI
 
     db = SQLDatabase.from_uri("postgresql://postgres:postsuperzax@localhost:5432/osm2pgsqldb")
-    llm = ChatOpenAI(temperature=0, openai_api_key="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", model_name="gpt-4")
+    llm = ChatOpenAI(temperature=0, openai_api_key="", model_name="gpt-4")
     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
     custom_suffix = """
