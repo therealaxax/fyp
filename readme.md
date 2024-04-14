@@ -73,3 +73,7 @@ The data used in this project is OpenStreetMap data for Malaysia, Singapore, and
 3. Proper nouns can also be entered one-by-one in http://127.0.0.1:5000/langchainmodel/fewshotsview . The original list of proper nouns used can also be found from Table 6 of this project's report. Click "Insert" to perform the insertion.
 
 4. Natural language questions about the geospatial data can be entered in http://127.0.0.1:5000/langchainmodel/input . The original test cases used are documented in the "Application Testing" section of this project's report.
+
+## Additional Notes
+
+The sql files contained in this repository are not essential in the running of the Flask application. They contain examples of spatial data-specific SQL queries which can be used to verify the data in the database. Similarly, the qgz file in this repository is not essential, but can be used with QGIS for visualizing the spatial data.
