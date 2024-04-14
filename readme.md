@@ -20,13 +20,13 @@ This project was built in Windows and is written in Python with HTML and CSS use
 
 1. It is recommended to use conda for managing dependencies. Install conda following the instructions at https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html This Anaconda Distribution installer was used for this project.
 
-2. Create a new conda environment. 'geoenv' in the command below denotes the name of the environment.
+2. Create a new conda environment. 'geoenv' in the command below denotes the name of the environment.  
    `conda create -n geoenv`
 
-3. Activate the conda environment.
+3. Activate the conda environment.  
    `conda activate geoenv`
 
-4. Install geopandas. https://geopandas.org/en/stable/getting_started/install.html The command below installs geopandas via the conda-forge channel.
+4. Install geopandas. https://geopandas.org/en/stable/getting_started/install.html The command below installs geopandas via the conda-forge channel.  
    `conda install --channel conda-forge geopandas`
 
 5. Install the rest of the dependencies into the same conda environment. This project was built using the versions of langchain, langchain_community, openai, and langchain_openai listed in the commands below.
